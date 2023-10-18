@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent Transactions</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td,
+        th {
+            padding: 10px;
+            border: 2px solid #8ebf42;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Parent Transactions</h1>
+
+<!-- Table for displaying parent transactions -->
+<table>
+    <thead>
+    <!-- Table header row -->
+    <tr>
+        <th>ID</th>
+        <th>Sender</th>
+        <th>Receiver</th>
+        <th>Total Amount</th>
+        <th>Total Paid Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over parent transactions and populate the table -->
+    <tr th:each="transaction : ${transactions.content}">
+        <td th:text="${transaction.id}"></td>
+        <td th:text="${transaction.sender}"></td>
+        <td th:text="${transaction.receiver}"></td>
+        <td th:text="${transaction.totalAmount}"></td>
+        <td>
+            <!-- Create a link to view child transactions -->
+            <a th:href="'/api/transactions/parent/' + ${transaction.id} + '/child'" class="total-paid-amount">
+                <span th:text="${transaction.totalPaidAmount}"></span>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Pagination section if there are multiple pages of data -->
+<div th:if="${transactions.totalPages > 1}">
+    <ul class="pagination">
+        <li th:if="${transactions.hasPrevious()}" class="page-item">
+            <!-- Link to the previous page -->
+            <a th:href="@{/api/transactions/parent/all(page=${transactions.previousPageable().pageNumber}, sort=${sort})}"
+               class="page-link">Previous Page</a>
+        </li>
+        <li th:if="${transactions.hasNext()}" class="page-item">
+            <!-- Link to the next page -->
+            <a th:href="@{/api/transactions/parent/all(page=${transactions.nextPageable().pageNumber}, sort=${sort})}"
+               class="page-link">Next Page</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

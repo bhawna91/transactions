@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Child Transactions</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td,
+        th {
+            padding: 10px;
+            border: 2px solid #8ebf42;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Child Transactions</h1>
+
+<!-- Table for displaying child transactions -->
+<table>
+    <thead>
+    <!-- Table header row -->
+    <tr>
+        <th>ID</th>
+        <th>Sender</th>
+        <th>Receiver</th>
+        <th>Total Amount</th>
+        <th>Paid Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over child transactions and populate the table -->
+    <tr th:each="transaction : ${transactions}">
+        <td th:text="${transaction.id}"></td>
+        <td th:text="${transaction.sender}"></td>
+        <td th:text="${transaction.receiver}"></td>
+        <td th:text="${transaction.totalAmount}"></td>
+        <td th:text="${transaction.paidAmount}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
